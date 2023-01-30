@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface StatService {
 
-//    void saveStat(EndpointHit endpointHit);
-
     void addHit(HitDto hitDto);
 
     List<StatDto> getStat(ViewStatDto statsParam);
