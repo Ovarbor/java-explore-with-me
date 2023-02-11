@@ -22,7 +22,7 @@ public class StatController {
     private final StatService service;
 
     @PostMapping("/hit")
-    public ResponseEntity <HitDto> saveStat(@RequestBody @Valid Hit hit) {
+    public ResponseEntity<HitDto> saveStat(@RequestBody @Valid Hit hit) {
         log.info("POST: /hit");
         return ResponseEntity.status(201).body(service.addHits(hit));
     }
