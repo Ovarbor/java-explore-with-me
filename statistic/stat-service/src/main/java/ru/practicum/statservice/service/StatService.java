@@ -1,13 +1,15 @@
 package ru.practicum.statservice.service;
+import org.springframework.stereotype.Service;
 import ru.practicum.statdto.dto.HitDto;
-import ru.practicum.statdto.dto.StatDto;
-import ru.practicum.statdto.dto.ViewStatDto;
-
+import ru.practicum.statservice.model.Hit;
+import ru.practicum.statservice.model.ViewStats;
+import java.time.LocalDateTime;
 import java.util.List;
 
+@Service
 public interface StatService {
 
-    void addHit(HitDto hitDto);
+    HitDto addHits(Hit hit);
 
-    List<StatDto> getStat(ViewStatDto statsParam);
+    List<ViewStats> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, boolean unique);
 }

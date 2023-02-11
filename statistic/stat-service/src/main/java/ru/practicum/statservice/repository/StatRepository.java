@@ -3,22 +3,25 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.practicum.statservice.model.Hit;
-import ru.practicum.statservice.model.StatGet;
+import ru.practicum.statservice.model.ViewStats;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
 public interface StatRepository extends JpaRepository<Hit, Long> {
 
-    @Query("SELECT s.app as app, s.uri as uri, COUNT(s.id) as hits " +
-            "FROM Hit s " +
-            "WHERE s.timestamp between :start AND :end " +
-            "GROUP BY s.app, s.uri ORDER BY s.uri DESC")
-    List<StatGet> countAll(LocalDateTime start, LocalDateTime end);
+    @Query(" SELECT e.app AS app, e.uri AS uri, COUNT(e.id) AS hits " +
+            "FROM Hit e " +
+            " WHERE e.uri IN :uris " +
+            " AND e.timestamp BETWEEN :start AND :end " +
+            " GROUP BY e.app, e.uri, e.ip ")
+    List<ViewStats> getStatsByCriteriaUnique(LocalDateTime start, LocalDateTime end, List<String> uris);
 
-    @Query("SELECT s.app as app, s.uri as uri, COUNT(DISTINCT s.ip) as hits " +
-            "FROM Hit s " +
-            "WHERE s.timestamp between :start AND :end " +
-            "GROUP BY s.app, s.uri ORDER BY s.uri DESC")
-    List<StatGet> countAllUniqueIp(LocalDateTime start, LocalDateTime end);
+    @Query(" SELECT e.app AS app, e.uri AS uri, COUNT(e.id) AS hits " +
+            "FROM Hit e " +
+            " WHERE e.uri IN :uris " +
+            " AND e.timestamp BETWEEN :start AND :end " +
+            " GROUP BY e.app, e.uri ")
+    List<ViewStats> getStatsByCriteria(LocalDateTime start, LocalDateTime end, List<String> uris);
 }

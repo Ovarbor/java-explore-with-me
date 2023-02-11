@@ -1,6 +1,7 @@
 package ru.practicum.statservice.model;
 
-public interface StatGet {
+
+public interface ViewStats {
 
     String getApp();
 
