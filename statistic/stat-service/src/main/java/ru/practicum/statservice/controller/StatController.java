@@ -22,13 +22,13 @@ public class StatController {
     private final StatService service;
 
     @PostMapping("/hit")
-    public ResponseEntity <HitDto> saveStat(@RequestBody @Valid Hit hit) {
+    public ResponseEntity<HitDto> saveStat(@RequestBody @Valid Hit hit) {
         log.info("POST: /hit");
         return ResponseEntity.status(201).body(service.addHits(hit));
     }
 
     @GetMapping("/stats")
-    public ResponseEntity <List<ViewStats>> getStat(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    public ResponseEntity<List<ViewStats>> getStat(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
                                          LocalDateTime start,
                                      @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
                                          LocalDateTime end,
