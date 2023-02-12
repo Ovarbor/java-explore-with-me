@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewmservice.dto.EventFullDto;
 import ru.practicum.ewmservice.model.Sort;
 import ru.practicum.ewmservice.public_service.service.PublicEventService;
-import ru.practicum.ewmservice.stats.EwmStatService;
+import ru.practicum.statclient.client.StatClient;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
@@ -22,12 +22,11 @@ import java.util.List;
 public class PublicEventController {
 
     private final PublicEventService publicEventservice;
-
-    private final EwmStatService ewmStatService;
+    private final StatClient statClient;
 
     @GetMapping
     public List<EventFullDto> getEvents(@RequestParam(required = false) String text,
-                                         @RequestParam(required = false) Long[] categories,
+                                         @RequestParam(required = false) List<Long> categories,
                                          @RequestParam(required = false) Boolean paid,
                                          @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeStart,
                                          @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeEnd,
@@ -36,17 +35,18 @@ public class PublicEventController {
                                          @PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
                                          @Positive @RequestParam(defaultValue = "10") Integer size,
                                          HttpServletRequest request) {
-        log.debug("Getting events");
-        ewmStatService.saveHit(request);
-
+        statClient.createHit(request);
+        log.info(
+                "GET: /events?text={}&categories={}&paid={}&rangeStart={}&rangeEnd={}&onlyAvailable={}&sort={}&from={}&size={}",
+                text, categories, paid, rangeStart, rangeEnd, onlyAvailable, sort, from, size);
         return publicEventservice.getEvents(text, categories, paid, rangeStart, rangeEnd,
                 onlyAvailable, sort, from, size, request);
     }
 
     @GetMapping("/{id}")
     public EventFullDto getEventById(@PathVariable Long id, HttpServletRequest request) {
-
-        ewmStatService.saveHit(request);
+        statClient.createHit(request);
+        log.info("GET: /events/{}", id);
         return publicEventservice.getEventById(id, request);
     }
 }

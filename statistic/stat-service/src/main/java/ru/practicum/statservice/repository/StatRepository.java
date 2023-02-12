@@ -4,8 +4,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.practicum.statdto.dto.StatDto;
 import ru.practicum.statservice.model.Hit;
-
-
 import java.time.LocalDateTime;
 import java.util.List;
 
