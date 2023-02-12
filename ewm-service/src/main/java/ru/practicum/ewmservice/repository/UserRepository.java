@@ -1,5 +1,4 @@
 package ru.practicum.ewmservice.repository;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -14,6 +13,6 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 
     Page<User> findAllByIdInOrderById(List<Long> ids, Pageable pageable);
 
-    @Query(value = "select user_name from users", nativeQuery = true)
+    @Query(value = "SELECT u.name FROM User u")
     List<String> findUserNames();
 }

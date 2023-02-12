@@ -52,9 +52,9 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     private void validate(UserDto userDto) {
-        Set<String> categoryNames = new HashSet<>(userRepository.findUserNames());
-        if (categoryNames.contains(userDto.getName())) {
-            throw new ConflictException("Category name: " + userDto.getName() + " already used");
+        Set<String> userNames = new HashSet<>(userRepository.findUserNames());
+        if (userNames.contains(userDto.getName())) {
+            throw new ConflictException("User name: " + userDto.getName() + " already used");
         }
     }
 }

@@ -60,7 +60,7 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
     }
 
     private void validate(CategoryDto categoryDto) {
-        Set<String> categoryNames = new HashSet<>(categoryRepository.findCategoryNames());
+        Set<String> categoryNames = new HashSet<>(categoryRepository.findCategoryByName());
         if (categoryNames.contains(categoryDto.getName())) {
             throw new ConflictException("Category name: " + categoryDto.getName() + " already used");
         }
