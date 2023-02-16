@@ -31,17 +31,27 @@ public class PublicEventController {
                                          @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeStart,
                                          @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeEnd,
                                          @RequestParam(required = false, defaultValue = "false") Boolean onlyAvailable,
+<<<<<<< HEAD
                                             @RequestParam(value = "place", required = false)Long placeId,
+=======
+>>>>>>> 3eeb1a23f1e913a3fb132a5491dbfc159437dec3
                                          @RequestParam(required = false, defaultValue = "EVENT_DATE") Sort sort,
                                          @PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
                                          @Positive @RequestParam(defaultValue = "10") Integer size,
                                          HttpServletRequest request) {
         statClient.createHit(request);
         log.info(
+<<<<<<< HEAD
                 "GET: /events?text={}&categories={}&paid={}&rangeStart={}&rangeEnd={}&onlyAvailable={}&place={}$sort={}&from={}&size={}",
                 text, categories, paid, rangeStart, rangeEnd, onlyAvailable, placeId, sort, from, size);
         return publicEventservice.getEvents(text, categories, paid, rangeStart, rangeEnd,
                 onlyAvailable, placeId, sort, from, size, request);
+=======
+                "GET: /events?text={}&categories={}&paid={}&rangeStart={}&rangeEnd={}&onlyAvailable={}&sort={}&from={}&size={}",
+                text, categories, paid, rangeStart, rangeEnd, onlyAvailable, sort, from, size);
+        return publicEventservice.getEvents(text, categories, paid, rangeStart, rangeEnd,
+                onlyAvailable, sort, from, size, request);
+>>>>>>> 3eeb1a23f1e913a3fb132a5491dbfc159437dec3
     }
 
     @GetMapping("/{id}")

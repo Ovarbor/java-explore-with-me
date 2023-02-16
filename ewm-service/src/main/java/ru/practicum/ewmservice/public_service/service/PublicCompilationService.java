@@ -11,4 +11,8 @@ public interface PublicCompilationService {
     CompilationDto getCompilation(Long compId);
 
     List<CompilationDto> getCompilations(Boolean pinned, int from, int size);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3eeb1a23f1e913a3fb132a5491dbfc159437dec3
 }
