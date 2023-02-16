@@ -61,7 +61,6 @@ CREATE TABLE IF NOT EXISTS compilation_event
     compilation_id      BIGINT NOT NULL REFERENCES compilations (compilation_id) ON DELETE CASCADE,
     event_id            BIGINT NOT NULL REFERENCES events (event_id) ON DELETE CASCADE
 );
-<<<<<<< HEAD
 
 DROP TABLE IF EXISTS places CASCADE;
 CREATE TABLE IF NOT EXISTS places
@@ -73,5 +72,3 @@ CREATE TABLE IF NOT EXISTS places
     radius FLOAT NOT NULL,
     CONSTRAINT pk_place PRIMARY KEY (place_id)
 );
-=======
->>>>>>> 3eeb1a23f1e913a3fb132a5491dbfc159437dec3
