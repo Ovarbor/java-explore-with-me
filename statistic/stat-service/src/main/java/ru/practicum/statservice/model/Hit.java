@@ -1,9 +1,11 @@
 package ru.practicum.statservice.model;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -19,16 +21,21 @@ public class Hit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @Column(name = "app")
     private String app;
 
+    @NotNull
     @Column(name = "uri")
     private String uri;
 
+    @NotNull
     @Column(name = "ip")
     private String ip;
 
+    @NotNull
     @Column(name = "add_time")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime timestamp;
 
     @Override

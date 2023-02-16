@@ -2,14 +2,15 @@ package ru.practicum.statservice.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.statdto.dto.HitDto;
 import ru.practicum.statdto.dto.StatDto;
-import ru.practicum.statdto.dto.ViewStatDto;
 import ru.practicum.statservice.mapper.StatMapper;
-import ru.practicum.statservice.model.StatGet;
+import ru.practicum.statservice.model.Hit;
 import ru.practicum.statservice.repository.HitRepository;
 import ru.practicum.statservice.repository.StatRepository;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,36 +23,24 @@ public class StatServiceImpl implements StatService {
     private final HitRepository appRepository;
     private final StatMapper statMapper;
 
-    @Transactional
-    public void addHit(HitDto hitDto) {
-        appRepository.save(statMapper.toHit(hitDto));
-        log.debug("Added hit: {}", hitDto);
+    @Override
+    public HitDto addHits(Hit hit) {
+        return statMapper.toHitDto(appRepository.save(hit));
     }
 
-    @Transactional(readOnly = true)
-    public List<StatDto> getStat(ViewStatDto statsParam) {
-        log.debug("Get stat: {}", statsParam);
-        List<StatDto> result;
-        if (statsParam.getUnique() != null) {
-            List<StatGet> allUnique = repository.countAllUniqueIp(statsParam.getStart(),
-                    statsParam.getEnd());
-            result = getUri(allUnique, statsParam.getUris());
+    @Override
+    public List<StatDto> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, boolean unique) {
+        if (uris == null || uris.isEmpty()) {
+            return new ArrayList<>();
         } else {
-            List<StatGet> all = repository.countAll(statsParam.getStart(),
-                    statsParam.getEnd());
-            result = getUri(all, statsParam.getUris());
+            if (unique) {
+                return repository.findStatWithUnique(uris, start, end)
+                        .stream().sorted(Comparator.comparing(StatDto::getHits).reversed()).collect(Collectors.toList());
+            } else {
+                return repository.findStatNOtUnique(uris, start, end)
+                        .stream().sorted(Comparator.comparing(StatDto::getHits).reversed()).collect(Collectors.toList());
+            }
         }
-        log.debug("Return stat: {}", result);
-        return result;
-    }
-
-    private List<StatDto> getUri(List<StatGet> all, List<String> uris) {
-        if (uris == null) {
-            return statMapper.toStatsDtoResp(all);
-        }
-        return statMapper.toStatsDtoResp(all.stream()
-                .filter(stat -> uris.contains(stat.getUri()))
-                .collect(Collectors.toList()));
     }
 }
 

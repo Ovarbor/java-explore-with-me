@@ -18,5 +18,6 @@ public class ViewStatDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime end;
     private List<String> uris;
+    private Long hits;
     private Boolean unique;
 }
