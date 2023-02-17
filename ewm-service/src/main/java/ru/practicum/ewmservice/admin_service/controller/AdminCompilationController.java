@@ -20,7 +20,7 @@ public class AdminCompilationController {
 
     private final AdminCompilationService adminCompilationService;
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<CompilationDto> postCompilation(@Valid @RequestBody NewCompilationDto newCompilationDto) {
         log.info("POST: /admin/compilations");
         return ResponseEntity.status(201).body(adminCompilationService.createCompilation(newCompilationDto));

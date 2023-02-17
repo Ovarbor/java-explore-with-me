@@ -12,11 +12,11 @@ import javax.validation.constraints.NotNull;
 public class NewLocationDto {
 
     @NotBlank
-    String name;
+    private String name;
     @NotNull
-    Float radius;
+    private Float radius;
     @NotNull
-    Float lat;
+    private Float lat;
     @NotNull
-    Float lon;
+    private Float lon;
 }

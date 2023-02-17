@@ -44,8 +44,6 @@ CREATE TABLE IF NOT EXISTS events (
     CONSTRAINT pk_event PRIMARY KEY (event_id)
 );
 
-
-
 DROP TABLE IF EXISTS requests CASCADE;
 CREATE TABLE IF NOT EXISTS requests
 (

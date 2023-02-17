@@ -10,8 +10,9 @@ import javax.validation.constraints.NotBlank;
 public class UpdateLocationDto {
 
     @NotBlank
-    String name;
-    Float radius;
-    Float lat;
-    Float lon;
+    private String name;
+
+    private Float radius;
+    private Float lat;
+    private Float lon;
 }

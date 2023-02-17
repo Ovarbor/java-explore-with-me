@@ -10,7 +10,7 @@ import ru.practicum.ewmservice.dto.NewCategoryDto;
 
 import javax.validation.Valid;
 
-@RequestMapping("/admin")
+@RequestMapping("/admin/categories")
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -18,20 +18,20 @@ public class AdminCategoryController {
 
     private final AdminCategoryService adminCategoryService;
 
-    @PostMapping("/categories")
+    @PostMapping
     public ResponseEntity<CategoryDto> postCategory(@Valid @RequestBody NewCategoryDto newCategoryDto) {
         log.info("POST: /admin/categories");
         return ResponseEntity.status(201).body(adminCategoryService.addCategory(newCategoryDto));
     }
 
-    @PatchMapping("/categories/{catId}")
+    @PatchMapping("/{catId}")
     public ResponseEntity<CategoryDto> patchCategory(@Valid @RequestBody CategoryDto categoryDto,
                                                         @PathVariable Long catId) {
         log.info("PATCH: /admin/categories/{}", catId);
         return ResponseEntity.ok().body(adminCategoryService.updateCategory(categoryDto, catId));
     }
 
-    @DeleteMapping("/categories/{catId}")
+    @DeleteMapping("/{catId}")
     public ResponseEntity<Void> deleteCategory(@PathVariable Long catId) {
         log.info("DELETE: /admin/categories/{}", catId);
         adminCategoryService.removeCategory(catId);
