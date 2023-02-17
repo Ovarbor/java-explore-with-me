@@ -4,35 +4,35 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.ewmservice.dto.PlaceDto;
-import ru.practicum.ewmservice.public_service.service.PublicPlaceService;
+import ru.practicum.ewmservice.dto.LocationDto;
+import ru.practicum.ewmservice.public_service.service.PublicLocationService;
 
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
 @RestController
-@RequestMapping("/places")
+@RequestMapping("/locations")
 @RequiredArgsConstructor
 @Slf4j
 @Validated
-public class PublicPlaceController {
+public class PublicLocationController {
 
-    private final PublicPlaceService publicPlaceService;
+    private final PublicLocationService publicLocationService;
 
     @GetMapping
-    ResponseEntity<List<PlaceDto>> getPlaces(
+    ResponseEntity<List<LocationDto>> getLocations(
                                         @RequestParam(value = "from", defaultValue = "0")
                                         @PositiveOrZero Integer from,
                                         @RequestParam(value = "size", defaultValue = "10")
                                         @Positive Integer size) {
-        log.info("GET /places?from=" + from + "&size=" + size);
-        return ResponseEntity.ok().body(publicPlaceService.findAllPlaces(from, size));
+        log.info("GET /locations?from=" + from + "&size=" + size);
+        return ResponseEntity.ok().body(publicLocationService.findAllLocations(from, size));
     }
 
-    @GetMapping("/{placeId}")
-    ResponseEntity<PlaceDto> getPlace(@PathVariable("placeId") Long placeId) {
-        log.info("GET /places/" + placeId);
-        return ResponseEntity.ok().body(publicPlaceService.findPlace(placeId));
+    @GetMapping("/{locId}")
+    ResponseEntity<LocationDto> getLocation(@PathVariable("locId") Long locId) {
+        log.info("GET /locations/{}", locId);
+        return ResponseEntity.ok().body(publicLocationService.findLocation(locId));
     }
 }

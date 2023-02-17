@@ -13,10 +13,7 @@ import ru.practicum.ewmservice.exceptions.NotFoundValidationException;
 import ru.practicum.ewmservice.mapper.EventMapper;
 import ru.practicum.ewmservice.mapper.RequestMapper;
 import ru.practicum.ewmservice.model.*;
-import ru.practicum.ewmservice.repository.CategoryRepository;
-import ru.practicum.ewmservice.repository.EventRepository;
-import ru.practicum.ewmservice.repository.RequestRepository;
-import ru.practicum.ewmservice.repository.UserRepository;
+import ru.practicum.ewmservice.repository.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -40,6 +37,8 @@ public class PrivateEventServiceImpl implements PrivateEventService {
 
     private final RequestMapper requestMapper;
 
+    private final LocationRepository locationRepository;
+
     @Override
     @Transactional
     public EventFullDto createEvent(Long userId, NewEventDto createRequest) {
@@ -49,6 +48,7 @@ public class PrivateEventServiceImpl implements PrivateEventService {
         validateEventDate(createdEvent.getEventDate());
         createdEvent.setInitiator(user);
         createdEvent.setCategory(category);
+        createdEvent.setLocation(locationRepository.save(createRequest.getLocation()));
         return eventMapper.toEventFullDto(eventRepository.save(createdEvent));
     }
 

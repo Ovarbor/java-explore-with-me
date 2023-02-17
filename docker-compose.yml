@@ -5,6 +5,7 @@ services:
     container_name: stat-service
     ports:
       - "9090:9090"
+    restart: on-failure
     depends_on:
       - stats-db
     environment:
@@ -18,6 +19,8 @@ services:
     container_name: stat-dataBase
     ports:
       - "6541:5432"
+    volumes:
+      - /var/lib/postgresql/data/
     environment:
       - POSTGRES_DB=statservice
       - POSTGRES_USER=postgres
@@ -31,6 +34,7 @@ services:
     depends_on:
       - stats-service
       - ewm-db
+    restart: on-failure
     environment:
       - STATS-SERVICE_URL=http://stats-service:9090
       - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:5432/ewmservice
@@ -43,6 +47,8 @@ services:
     container_name: ewm-dataBase
     ports:
       - "6542:5432"
+    volumes:
+      - /var/lib/postgresql/data/
     environment:
       - POSTGRES_DB=ewmservice
       - POSTGRES_USER=postgres

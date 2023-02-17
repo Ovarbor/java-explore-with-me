@@ -12,8 +12,6 @@ import ru.practicum.ewmservice.exceptions.NotFoundValidationException;
 import ru.practicum.ewmservice.mapper.EventMapper;
 import ru.practicum.ewmservice.model.*;
 import ru.practicum.ewmservice.repository.EventRepository;
-import ru.practicum.ewmservice.repository.PlaceRepository;
-
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,12 +25,10 @@ public class PublicEventServiceImpl implements PublicEventService {
 
     private final EventRepository eventRepository;
     private final EventMapper eventMapper;
-    private final PlaceRepository placeRepository;
-    private static final org.springframework.data.domain.Sort SORT_BY_DATE = org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.ASC, "eventDate");
-    private static final org.springframework.data.domain.Sort SORT_BY_VIEWS = org.springframework.data.domain.Sort.by(Sort.Direction.ASC, "views");
-    private static final org.springframework.data.domain.Sort SORT_BY_LOCATION = org.springframework.data.domain.Sort.by(Sort.Direction.ASC, "locations");
-
-
+    private static final org.springframework.data.domain.Sort SORT_BY_DATE =
+            org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.ASC, "eventDate");
+    private static final org.springframework.data.domain.Sort SORT_BY_VIEWS =
+            org.springframework.data.domain.Sort.by(Sort.Direction.ASC, "views");
 
     @Override
     public EventFullDto getEventById(Long eventId, HttpServletRequest request) {
@@ -47,16 +43,13 @@ public class PublicEventServiceImpl implements PublicEventService {
 
     @Override
     public List<EventFullDto> getEvents(String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart,
-                                        LocalDateTime rangeEnd, Boolean onlyAvailable, Long placeId,
+                                        LocalDateTime rangeEnd, Boolean onlyAvailable,
                                         ru.practicum.ewmservice.model.Sort sort,
                                         Integer from, Integer size, HttpServletRequest request) {
         Pageable page = PageRequest.of(from / size, size, SORT_BY_DATE);
         BooleanExpression expression = buildExpression(text, categories, paid, rangeStart, rangeEnd);
         if (sort.equals(ru.practicum.ewmservice.model.Sort.VIEWS)) {
             page = PageRequest.of(from / size, size, SORT_BY_VIEWS);
-        }
-        if (sort.equals((ru.practicum.ewmservice.model.Sort.LOCATION))) {
-            page = PageRequest.of(from / size, size, org.springframework.data.domain.Sort.by(Sort.Direction.ASC, "location_lat"));
         }
         List<Event> foundEvents = eventRepository.findAll(expression, page).getContent();
         foundEvents = foundEvents

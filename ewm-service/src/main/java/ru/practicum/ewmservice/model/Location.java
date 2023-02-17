@@ -1,21 +1,33 @@
 package ru.practicum.ewmservice.model;
-import lombok.Data;
-import lombok.ToString;
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import lombok.*;
 
-@Data
-@ToString
-@Embeddable
-@AttributeOverrides({
-        @AttributeOverride(name = "lat", column = @Column(name = "location_lat")),
-        @AttributeOverride(name = "lon", column = @Column(name = "location_lon")),
-})
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
+@Entity
+@Getter
+@Setter
+@Table(name = "locations")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Location {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "location_id", insertable = false)
+    private Long id;
+
+    @Column(name = "location_lat")
+    @NotNull
     private Float lat;
 
+    @Column(name = "location_lon")
+    @NotNull
     private Float lon;
+
+    @Column(name = "radius")
+    private Float radius;
+
+    @Column(name = "location_name")
+    private String name;
 }
