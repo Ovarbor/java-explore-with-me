@@ -10,9 +10,9 @@ import javax.validation.constraints.NotBlank;
 @Builder
 public class HitShortDto {
     @NotBlank
-   private String app;
+    private String app;
     @NotBlank
-   private String uri;
+    private String uri;
     @NotBlank
-   private String ip;
+    private String ip;
 }
