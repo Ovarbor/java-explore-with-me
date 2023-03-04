@@ -9,7 +9,7 @@ public interface AdminLocationService {
 
     LocationDto addLocation(NewLocationDto newLocationDto);
 
-    void removeLocation(Long placeId);
+    void removeLocation(Long locId);
 
-    LocationDto updateLocation(UpdateLocationDto updateLocationDto, Long placeId);
+    LocationDto updateLocation(UpdateLocationDto updateLocationDto, Long locId);
 }

@@ -28,18 +28,18 @@ public class AdminLocationServiceImpl implements AdminLocationService {
     }
 
     @Override
-    public void removeLocation(Long placeId) {
-        if (!locationRepository.existsById(placeId)) {
-            throw new NotFoundValidationException("User with id: " + placeId + " not found");
+    public void removeLocation(Long locId) {
+        if (!locationRepository.existsById(locId)) {
+            throw new NotFoundValidationException("User with id: " + locId + " not found");
         }
-        locationRepository.deleteById(placeId);
+        locationRepository.deleteById(locId);
     }
 
     @Override
     @Transactional
-    public LocationDto updateLocation(UpdateLocationDto updateLocationDto, Long placeId) {
-        Location oldLocation = locationRepository.findById(placeId).orElseThrow(()
-                -> new NotFoundValidationException("Category with id: " + placeId + " not found"));
+    public LocationDto updateLocation(UpdateLocationDto updateLocationDto, Long locId) {
+        Location oldLocation = locationRepository.findById(locId).orElseThrow(()
+                -> new NotFoundValidationException("Location with id: " + locId + " not found"));
         validate(updateLocationDto);
         Location updateLocation = locationUpdate(oldLocation, updateLocationDto);
         return locationMapper.toLocationDto(updateLocation);
@@ -48,7 +48,7 @@ public class AdminLocationServiceImpl implements AdminLocationService {
     private void validate(UpdateLocationDto locationDto) {
         Set<String> locationsNames = new HashSet<>(locationRepository.findLocationByName());
         if (locationsNames.contains(locationDto.getName())) {
-            throw new ConflictException("Category name: " + locationDto.getName() + " already used");
+            throw new ConflictException("Location name: " + locationDto.getName() + " already used");
         }
     }
 

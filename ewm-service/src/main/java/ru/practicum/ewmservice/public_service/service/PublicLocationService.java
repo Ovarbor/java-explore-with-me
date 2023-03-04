@@ -10,5 +10,5 @@ public interface PublicLocationService {
 
     List<LocationDto> findAllLocations(int from, int size);
 
-    LocationDto findLocation(Long placeId);
+    LocationDto findLocation(Long locId);
 }

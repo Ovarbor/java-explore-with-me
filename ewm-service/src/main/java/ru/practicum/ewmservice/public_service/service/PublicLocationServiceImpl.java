@@ -23,9 +23,9 @@ public class PublicLocationServiceImpl implements PublicLocationService {
     }
 
     @Override
-    public LocationDto findLocation(Long placeId) {
-        Location place = locationRepository.findById(placeId).orElseThrow(() ->
-                new NotFoundValidationException("Place with id: " + placeId + " not found"));
+    public LocationDto findLocation(Long locId) {
+        Location place = locationRepository.findById(locId).orElseThrow(() ->
+                new NotFoundValidationException("Place with id: " + locId + " not found"));
         return locationMapper.toLocationDto(place);
     }
 }
