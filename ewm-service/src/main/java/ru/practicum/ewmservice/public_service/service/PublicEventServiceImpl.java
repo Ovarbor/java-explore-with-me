@@ -25,23 +25,27 @@ public class PublicEventServiceImpl implements PublicEventService {
 
     private final EventRepository eventRepository;
     private final EventMapper eventMapper;
-    private static final org.springframework.data.domain.Sort SORT_BY_DATE = org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.ASC, "eventDate");
-    private static final org.springframework.data.domain.Sort SORT_BY_VIEWS = org.springframework.data.domain.Sort.by(Sort.Direction.ASC, "views");
-
+    private static final org.springframework.data.domain.Sort SORT_BY_DATE =
+            org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.ASC, "eventDate");
+    private static final org.springframework.data.domain.Sort SORT_BY_VIEWS =
+            org.springframework.data.domain.Sort.by(Sort.Direction.ASC, "views");
 
     @Override
     public EventFullDto getEventById(Long eventId, HttpServletRequest request) {
         Event event = eventRepository.findById(eventId)
-                .orElseThrow(() -> new NotFoundValidationException("event id=" + eventId + " not found"));
+                .orElseThrow(() -> new NotFoundValidationException("Event with id: " + eventId + " not found"));
 
         if (event.getState().equals(EventState.PENDING) || event.getState().equals(EventState.CANCELED)) {
-            throw new ForbiddenException("event id=" + eventId + " not published");
+            throw new ForbiddenException("Event with id: " + eventId + " not published");
         }
         return eventMapper.toEventFullDto(eventRepository.save(event));
     }
 
     @Override
-    public List<EventFullDto> getEvents(String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart, LocalDateTime rangeEnd, Boolean onlyAvailable, ru.practicum.ewmservice.model.Sort sort, Integer from, Integer size, HttpServletRequest request) {
+    public List<EventFullDto> getEvents(String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart,
+                                        LocalDateTime rangeEnd, Boolean onlyAvailable,
+                                        ru.practicum.ewmservice.model.Sort sort,
+                                        Integer from, Integer size, HttpServletRequest request) {
         Pageable page = PageRequest.of(from / size, size, SORT_BY_DATE);
         BooleanExpression expression = buildExpression(text, categories, paid, rangeStart, rangeEnd);
         if (sort.equals(ru.practicum.ewmservice.model.Sort.VIEWS)) {

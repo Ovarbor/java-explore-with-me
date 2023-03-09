@@ -11,7 +11,6 @@ import java.util.List;
 @Service
 public interface PublicEventService {
 
-
     EventFullDto getEventById(Long eventId, HttpServletRequest request);
 
     List<EventFullDto> getEvents(String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart, LocalDateTime rangeEnd,

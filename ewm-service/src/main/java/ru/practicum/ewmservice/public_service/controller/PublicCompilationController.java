@@ -25,7 +25,7 @@ public class PublicCompilationController {
         return ResponseEntity.ok().body(publicCompilationService.getCompilation(compId));
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<CompilationDto>> getCompilations(@RequestParam(required = false) Boolean pinned,
                                                 @RequestParam(value = "from", defaultValue = "0")
                                                 @PositiveOrZero Integer from,

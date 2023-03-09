@@ -20,7 +20,7 @@ public class AdminUserController {
 
     private final AdminUserService adminUserService;
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<UserDto> postUser(@Valid @RequestBody NewUserRequest newUserRequest) {
         log.info("POST: /admin/users");
         return ResponseEntity.status(201).body(adminUserService.addUser(newUserRequest));
@@ -33,7 +33,7 @@ public class AdminUserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<UserDto>>  getUsers(@RequestParam(required = false) List<Long> ids,
                                   @RequestParam(value = "from", defaultValue = "0") @PositiveOrZero Integer from,
                                   @RequestParam(value = "size", defaultValue = "10") @Positive Integer size) {

@@ -9,17 +9,17 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class EventShortDto {
 
-    Long id;
-    String annotation;
-    CategoryDto category;
-    Integer confirmedRequests;
-    String description;
+    private Long id;
+    private String annotation;
+    private CategoryDto category;
+    private Integer confirmedRequests;
+    private String description;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    LocalDateTime eventDate;
+    private LocalDateTime eventDate;
 
-    UserShortDto initiator;
-    Boolean paid;
-    String title;
-    Long views;
+    private UserShortDto initiator;
+    private Boolean paid;
+    private String title;
+    private Long views;
 }

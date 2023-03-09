@@ -24,7 +24,7 @@ public class PublicCategoryController {
         return ResponseEntity.ok().body(publicCategoryService.getCategory(catId));
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<CategoryDto>> getCategories(@RequestParam(value = "from", defaultValue = "0")
                                                @PositiveOrZero Integer from,
                                            @RequestParam(value = "size", defaultValue = "10")

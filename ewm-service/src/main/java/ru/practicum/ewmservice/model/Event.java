@@ -51,7 +51,9 @@ public class Event {
     @JoinColumn(name = "initiator_id", nullable = false)
     private User initiator;
 
-    @Embedded
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "location_id", nullable = false)
+    @NotNull
     private Location location;
 
     @NotNull

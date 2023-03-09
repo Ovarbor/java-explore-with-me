@@ -7,7 +7,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.practicum.ewmservice.model.Event;
-import ru.practicum.ewmservice.model.EventState;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,8 +17,6 @@ public interface EventRepository extends PagingAndSortingRepository<Event, Long>
     List<Event> findEventsByInitiatorIdOrderById(Long userId, Pageable page);
 
     Optional<Event> findEventByInitiatorIdAndId(Long userId, Long eventId);
-
-    Optional<Event> findEventByIdAndState(Long eventId, EventState published);
 
     Integer countEventByCategoryId(long catId);
 

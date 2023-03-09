@@ -37,7 +37,7 @@ public class PublicEventController {
                                          HttpServletRequest request) {
         statClient.createHit(request);
         log.info(
-                "GET: /events?text={}&categories={}&paid={}&rangeStart={}&rangeEnd={}&onlyAvailable={}&sort={}&from={}&size={}",
+                "GET: /events?text={}&categories={}&paid={}&rangeStart={}&rangeEnd={}&onlyAvailable={}$sort={}&from={}&size={}",
                 text, categories, paid, rangeStart, rangeEnd, onlyAvailable, sort, from, size);
         return publicEventservice.getEvents(text, categories, paid, rangeStart, rangeEnd,
                 onlyAvailable, sort, from, size, request);
