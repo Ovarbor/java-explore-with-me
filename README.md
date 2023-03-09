@@ -10,10 +10,10 @@ Explore-with me application with microservice architecture that consists of two 
       - Stat-dto - submodule that contains dto for public usage.  
       - Stat-client - allows you to send requests and process responses.  
 <img src="resources/stats_schema.png" width="200">
-   2. EWM module - the main functionality of the application. The functionality of the module can be divided into 3 parts:
-      - public API - provides the ability to search and filter events.
-      - private API - implements the capabilities of registered users. Add, update, get events. Confirmation and submission of requests for participation in the event.
-      - admin API - service setup and support. Add, update, delete categories for events. User management - add, get and delete. Event moderation. Add, remove compilations of events.
+   2. EWM module - the main functionality of the application. The functionality of the module can be divided into 3 parts:  
+      - public API - provides the ability to search and filter events.  
+      - private API - implements the capabilities of registered users. Add, update, get events. Confirmation and submission of requests for participation in the event.  
+      - admin API - service setup and support. Add, update, delete categories for events. User management - add, get and delete. Event moderation. Add, remove compilations of events.  
 <img src="resources/ewm_schema.png" width="600">
 
 Also, as a feature of this project you can add, remove or update location data of event, such as name, description, radius, lat, lon!
